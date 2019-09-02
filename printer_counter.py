@@ -1,8 +1,9 @@
 from os import system
 from ansi_colors import colors
 
-import functions
 import os, time
+import traceback
+import sys
 
 from fpdf import FPDF
 
@@ -379,6 +380,7 @@ class compte_user():
         pdf.set_font('Arial', '', 10)
         pdf.text(160,20,date_tmp)
 
+
 # INITIALISATION DES TABLEAUX ET VARIABLES
 # Tableau de lignes pour lire le fichier
 lines = []
@@ -554,8 +556,12 @@ def translate_time(time_tmp):
     if time_element[1] == "Dec":
         time_element[1] = "Décembre"
 
-    time_to_print = time_element[0] + " " + time_element[2] + " " + time_element[1]+ " " + time_element[4]
+
+    #mise en forme de la date
+    time_to_print = time_element[3] + " " + time_element[1] + " " + time_element[5]
     return time_to_print
+
+
 
 # DEBUT DU PROGRAMME
 
@@ -570,9 +576,12 @@ for file in os.listdir("./fichier_input"):
     print("Traitement de " + NOM_ECOLE + "...")
 
     # Ouverture et lecture du fichier
-    f = open("./fichier_input/"+file, "r")
-    lines = f.readlines()
-    f.close()
+    try:
+        f = open("./fichier_input/"+file, "r")
+        lines = f.readlines()
+        f.close()
+    except IOError:
+        print("Erreur sur {1}: {0}" + format(IOError,NOM_ECOLE))
 
     # Récupération des données des utilisateurs dans la liste users
     get_user_data_from_file()
@@ -583,10 +592,23 @@ for file in os.listdir("./fichier_input"):
     # Ecriture dans le fichier pour chaque utilisateur du tableau
     for user in users:
         print("Traitement de " + user.account_name)
-        user.make_pdf()
+        try:
+            user.make_pdf()
+        except ValueError:
+            print("Erreur sur {1}: {0}" + format(ValueError,NOM_ECOLE))
+
+    #Vérification de l'existence du dossier de sortie
+    if not os.path.exists('./fichier_output/'):
+        os.makedirs('./fichier_output/')
 
     # On écrit le PDF
-    pdf.output('./fichier_output/' + NOM_ECOLE + '.pdf', 'F')
+    try:
+        pdf.output('./fichier_output/' + NOM_ECOLE + '.pdf', 'F')
+    except Exception:
+        print(traceback.format_exc())
+        # or
+        print(sys.exc_info()[2])
+
 
 #
 
