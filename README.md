@@ -4,15 +4,13 @@ Designed to generate a pdf file with all the data from Konica Minolta Printers
 Pour faire fonctionner printer_counter
 **************************************
 
-* Créer un dossier
+* Créer un dossier 'fichier_input' (sans guillemets) au meme niveau que le script.
+Le nom du dossier doit être exactement comme indiqué sinon, ça ne fonctionnera pas.
 
-* Créer deux dossiers (le nom doit être exactement celui là sinon, ça ne fonctionnera pas) :
-- fichier_input
-- fichier_output
+* Dans le dossier 'fichier_input', mettre les fichiers récupérés sur le copieur
+(voir le mode d'emploi)
 
-* Dans le dossier fichier_input, mettre les fichiers récupérés sur le copieur
-
-* Les PDFs sont générés dans le dossier fichier_output
+* Les PDFs sont générés dans un dossier 'fichier_output'
 
 
 ********************
