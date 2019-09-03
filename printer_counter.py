@@ -588,35 +588,45 @@ for file in os.listdir("./fichier_input"):
 
     # initialisation du fichier PDF
     pdf = FPDF()
+    PRINT_PDF = True
+    PRINT_CONSOLE = False
 
-    # Ecriture dans le fichier pour chaque utilisateur du tableau
+
+    # Vérification des arguments passés en paramètre
+    # pas d'argument : génération des pdfs uniquement
+    # -c (console) : affichage sur la console + génération des pdfs
+    # -oc (only console) : affichage sur la console seulement
+    if len(sys.argv) > 1:
+        if sys.argv[1] == '-c' or '-oc':
+            PRINT_CONSOLE = True
+        if sys.argv[1] == '-oc':
+            PRINT_PDF = False
+
+
+    # Traitement et sortie console et/ou PDF pour chaque utilisateur du tableau
     for user in users:
         print("Traitement de " + user.account_name)
-        if len(sys.argv) > 1:
-            if sys.argv[1] == '-c':
-                user.print_everything()
-                system("pause")
-                system("cls")
+        if PRINT_CONSOLE == True:
+            user.print_everything()
+            system("pause")
+            system("cls")
+
+        if PRINT_PDF == True:
+            try:
+                user.make_pdf()
+            except ValueError:
+                print("Erreur sur {1}: {0}" + format(ValueError,NOM_ECOLE))
+
+    if PRINT_PDF == True:
+        #Vérification de l'existence du dossier de sortie
+        if not os.path.exists('./fichier_output/'):
+            os.makedirs('./fichier_output/')
+
+    if PRINT_PDF == True:
+        # On écrit le PDF
         try:
-            user.make_pdf()
-        except ValueError:
-            print("Erreur sur {1}: {0}" + format(ValueError,NOM_ECOLE))
-
-    #Vérification de l'existence du dossier de sortie
-    if not os.path.exists('./fichier_output/'):
-        os.makedirs('./fichier_output/')
-
-    # On écrit le PDF
-    try:
-        pdf.output('./fichier_output/' + NOM_ECOLE + '.pdf', 'F')
-    except Exception:
-        print(traceback.format_exc())
-        # or
-        print(sys.exc_info()[2])
-
-
-#
-
-#
-#
-#
+            pdf.output('./fichier_output/' + NOM_ECOLE + '.pdf', 'F')
+        except Exception:
+            print(traceback.format_exc())
+            # or
+            print(sys.exc_info()[2])
