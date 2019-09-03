@@ -4,7 +4,7 @@ Designed to generate a pdf file with all the data from Konica Minolta Printers
 Pour faire fonctionner printer_counter
 **************************************
 
-* Créer deux dossiers au meme niveau que le script
+* Créer deux dossiers au meme niveau que le script.
 Le nom des dossiers doit être exactement comme indiqué sinon, ça ne fonctionnera pas :
   - fichier_input
   - fichier_output
