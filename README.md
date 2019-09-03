@@ -13,6 +13,12 @@ Le nom du dossier doit être exactement comme indiqué sinon, ça ne fonctionner
 * Les PDFs sont générés dans un dossier 'fichier_output'
 
 
+**********************************
+arguments à passer :
+rien : génération des PDF uniquement
+-c (console) : option pour afficher les données sur la console de commandes + les PDF
+-oc (only console) : console uniquement
+
 ********************
 * Pour modifier/recompiler, il faut installer
 - Python 3.7 au minimum
