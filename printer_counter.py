@@ -592,6 +592,11 @@ for file in os.listdir("./fichier_input"):
     # Ecriture dans le fichier pour chaque utilisateur du tableau
     for user in users:
         print("Traitement de " + user.account_name)
+        if len(sys.argv) > 1:
+            if sys.argv[1] == '-c':
+                user.print_everything()
+                system("pause")
+                system("cls")
         try:
             user.make_pdf()
         except ValueError:
